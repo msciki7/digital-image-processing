@@ -64,15 +64,15 @@ void write_bmp(const char* path, uint8** img, int w, int h) {
 
 /* ── Exercise 4: 수평 Sobel (High-pass), 0~255 ──
    kernel:
-     +1  0  -1
-     +2  0  -2
-     +1  0  -1                        */
+     +1  +2  +1
+      0   0   0
+     -1  -2  -1                        */
 uint8** sobel_horizontal(uint8** input) {
     int y, x, dy, dx, sum;
     int mask[3][3] = {
-        { 1,  0, -1 },
-        { 2,  0, -2 },
-        { 1,  0, -1 }
+        { 1,  2,  1 },
+        { 0,  0,  0 },
+        {-1, -2, -1 }
     };
     uint8** out = alloc_2d(IMG_HEIGHT, IMG_WIDTH);
 
