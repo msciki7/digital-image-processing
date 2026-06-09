@@ -13,8 +13,7 @@ ex6_rotation
 ex7_histogram
 main
 
-# 출력 이미지 (선택: 올리고 싶으면 이 줄들 삭제)
-output_*.bmp
+# 출력 이미지
 
 # macOS
 .DS_Store
