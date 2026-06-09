@@ -156,14 +156,11 @@ int main(void) {
                     qblk[i][j] = (int)round(dct[i][j] / step);
                 }
 
-            /* Visualize DCT coefficients (before Q) with log magnitude scaling.
-               This produces a dark image with bright spots at low frequencies,
-               matching the expected DCT-domain visualization in the slides.   */
+            /* Visualize quantized DCT coefficients (qblk).
+               abs(qblk)*8: 0(대부분) -> 검정, 비영 계수 -> 밝게.          */
             for (int i = 0; i < 8; i++)
                 for (int j = 0; j < 8; j++) {
-                    double mag = fabs(dct[i][j]);
-                    /* log(1 + |F|) / log(1 + max_expected) * 255 */
-                    int v = (int)(log(1.0 + mag) / log(1.0 + 2000.0) * 255.0);
+                    int v = abs(qblk[i][j]) * 8;
                     dct_q_im[bi*8+i][bj*8+j] = (unsigned char)clamp(v);
                 }
 

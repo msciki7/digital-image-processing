@@ -150,23 +150,12 @@ int main(void) {
         }
     }
 
-    /* min-max normalization -> 0~255 */
-    double vmin = real_out[0][0], vmax = real_out[0][0];
-    for (int i = 0; i < N; i++)
-        for (int j = 0; j < N; j++) {
-            if (real_out[i][j] < vmin) vmin = real_out[i][j];
-            if (real_out[i][j] > vmax) vmax = real_out[i][j];
-        }
-
+    /* 수학적 IDFT 결과를 그대로 반올림 후 0~255 clipping */
     unsigned char **out = malloc(N * sizeof(unsigned char *));
     for (int i = 0; i < N; i++) {
         out[i] = malloc(N);
-        for (int j = 0; j < N; j++) {
-            double norm = (vmax > vmin)
-                          ? (real_out[i][j] - vmin) / (vmax - vmin) * 255.0
-                          : 0.0;
-            out[i][j] = (unsigned char)clamp((int)round(norm));
-        }
+        for (int j = 0; j < N; j++)
+            out[i][j] = (unsigned char)clamp((int)round(real_out[i][j]));
         free(real_out[i]);
     }
     free(real_out);
